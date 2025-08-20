@@ -49,7 +49,7 @@ public class ProductBasket {
     }
 
     public boolean isCheckProductBasket(Product product) {
-        for (int i = 0; i < productBasket.length && productBasket[i] != null; i++) {
+        for (int i = 0; i < productBasket.length; i++) {
             if (productBasket[i].getName().equals(product.getName())) {
                 return true;
             }
