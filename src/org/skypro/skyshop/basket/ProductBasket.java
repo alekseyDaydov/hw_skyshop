@@ -5,7 +5,7 @@ import org.skypro.skyshop.product.Product;
 import java.util.Arrays;
 
 public class ProductBasket {
-    private Product[] productBasket = new Product[5];
+    private final Product[] productBasket = new Product[5];
 
     public void addProduct(Product product) {
         if (product == null) {
