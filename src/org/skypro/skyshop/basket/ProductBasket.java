@@ -2,6 +2,8 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.Arrays;
+
 public class ProductBasket {
     private Product[] productBasket = new Product[5];
 
@@ -22,21 +24,25 @@ public class ProductBasket {
     }
 
     public int getAmountBasket() {
-        int result = 0;
-        for (int i = 0; i < productBasket.length && productBasket[i] != null; i++) {
-            result += productBasket[i].getAmount();
+        int price = 0;
+        for (int i = 0; i < productBasket.length; i++) {
+            if (productBasket[i] != null) {
+                price += productBasket[i].getAmount();
+            }
         }
-        return result;
+        return price;
     }
 
     public void printProductBasket() {
-        int result = 0;
-        for (int i = 0; i < productBasket.length && productBasket[i] != null; i++) {
-            System.out.println(productBasket[i]);
-            result += productBasket[i].getAmount();
+        int price = 0;
+        for (int i = 0; i < productBasket.length; i++) {
+            if (productBasket[i] != null) {
+                System.out.println(productBasket[i]);
+                price += productBasket[i].getAmount();
+            }
         }
-        if (result != 0) {
-            System.out.println("Итого: <" + result + ">");
+        if (price != 0) {
+            System.out.println("Итого: <" + price + ">");
         } else {
             System.out.println("В корзине пусто");
         }
@@ -44,7 +50,7 @@ public class ProductBasket {
 
     public boolean isCheckProductBasket(Product product) {
         for (int i = 0; i < productBasket.length && productBasket[i] != null; i++) {
-            if (productBasket[i].getName() == product.getName()) {
+            if (productBasket[i].getName().equals(product.getName())) {
                 return true;
             }
         }
@@ -52,8 +58,6 @@ public class ProductBasket {
     }
 
     public void clearBasket() {
-        for (int i = 0; i <= productBasket.length && productBasket[i] != null; i++) {
-            productBasket[i] = null;
-        }
+        Arrays.fill(productBasket, null);
     }
 }

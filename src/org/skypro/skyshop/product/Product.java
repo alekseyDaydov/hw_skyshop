@@ -25,6 +25,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return "<" + name + "> : <" + amount + ">";
+        return "<" + name + ">:<" + amount + ">";
     }
 }
