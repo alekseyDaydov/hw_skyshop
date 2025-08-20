@@ -8,6 +8,9 @@ public class Product {
         if (amount < 0) {
             throw new IllegalArgumentException("Цена товара не может быть меньше нуля");
         }
+        if (name == null) {
+            throw new IllegalArgumentException("Поле Имя не может быть пустым");
+        }
         this.name = name;
         this.amount = amount;
     }
