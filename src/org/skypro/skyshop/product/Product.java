@@ -1,6 +1,6 @@
 package org.skypro.skyshop.product;
 
-public class Product {
+public abstract class Product {
     private String name;
     private int amount;
 
@@ -23,6 +23,7 @@ public class Product {
         return amount;
     }
 
+    public abstract double getPrice();
     @Override
     public String toString() {
         return "<" + name + ">:<" + amount + ">";
