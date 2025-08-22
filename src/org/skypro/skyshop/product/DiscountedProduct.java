@@ -11,17 +11,17 @@ public class DiscountedProduct extends Product {
     }
 
     @Override
-    public double getPrice() {
-        return baseAmount - baseAmount * discount / (double) 100;
-    }
-
-    @Override
     public boolean isSpecial() {
         return true;
     }
 
     @Override
+    public double getPrice() {
+        return baseAmount - baseAmount * discount / (double) 100;
+    }
+
+    @Override
     public String toString() {
-        return super.toString() + "<" + getPrice() +"> (<" + discount +">%)" ;
+        return super.toString() + "<" + getPrice() + "> (<" + discount + ">%)";
     }
 }
