@@ -23,26 +23,31 @@ public class ProductBasket {
         }
     }
 
-    public int getAmountBasket() {
-        int price = 0;
+    public double getPriceBasket() {
+        double price = 0;
         for (int i = 0; i < productBasket.length; i++) {
             if (productBasket[i] != null) {
-                price += productBasket[i].getAmount();
+                price += (double) productBasket[i].getPrice();
             }
         }
         return price;
     }
 
     public void printProductBasket() {
-        int price = 0;
-        for (int i = 0; i < productBasket.length; i++) {
-            if (productBasket[i] != null) {
-                System.out.println(productBasket[i]);
-                price += productBasket[i].getAmount();
+        double price = 0;
+        int countSpecial = 0;
+        for (Product product : productBasket) { // i = 0; i < productBasket.length; i++) {
+            if (product != null) {
+                System.out.println(product);
+                price += (double) product.getPrice();
+                if (product.isSpecial()) {
+                    countSpecial++;
+                }
             }
         }
         if (price != 0) {
             System.out.println("Итого: <" + price + ">");
+            System.out.println("Специальных товаров: <" + countSpecial + ">");
         } else {
             System.out.println("В корзине пусто");
         }
@@ -50,7 +55,7 @@ public class ProductBasket {
 
     public boolean isCheckProductBasket(Product product) {
         for (int i = 0; i < productBasket.length; i++) {
-            if (productBasket[i].getName().equals(product.getName())) {
+            if (productBasket[i] != null && productBasket[i].getName().equals(product.getName())) {
                 return true;
             }
         }

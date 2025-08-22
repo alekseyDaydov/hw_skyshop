@@ -1,16 +1,19 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.DiscountedProduct;
+import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
     public static void main(String[] args) {
-        Product sausage = new Product("Колбаса", 20);
-        Product bread = new Product("Хлеб", 6);
-        Product meat = new Product("Мясо", 70);
-        Product beer = new Product("Пиво", 30);
-        Product tomatoes = new Product("Помидоры", 12);
-        Product potato = new Product("Картофель", 45);
+        Product sausage = new SimpleProduct("Колбаса", 20);
+        Product bread = new SimpleProduct("Хлеб", 6);
+        Product meat = new FixPriceProduct("Мясо");
+        Product beer = new FixPriceProduct("Пиво");
+        Product tomatoes = new DiscountedProduct("Помидоры", 12, 50);
+        Product potato = new DiscountedProduct("Картофель", 45,10);
 
         System.out.println("Добавление продукта в корзину");
         System.out.println("vasyBasket");
@@ -35,8 +38,8 @@ public class App {
         petyBasket.printProductBasket();
 
         System.out.println("Получение стоимости корзины с несколькими товарами");
-        System.out.println(petyBasket.getAmountBasket());
-        System.out.println(vasyBasket.getAmountBasket());
+        System.out.println(petyBasket.getPriceBasket());
+        System.out.println(vasyBasket.getPriceBasket());
 
         System.out.println("Поиск товара, который есть в корзине");
         System.out.println(petyBasket.isCheckProductBasket(potato));
@@ -49,7 +52,7 @@ public class App {
         vasyBasket.printProductBasket();
 
         System.out.println("Получение стоимости пустой корзины");
-        System.out.println(vasyBasket.getAmountBasket());
+        System.out.println(vasyBasket.getPriceBasket());
 
         System.out.println("Поиск товара по имени в пустой корзине");
         System.out.println(vasyBasket.isCheckProductBasket(sausage));
