@@ -2,6 +2,7 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.articles.Article;
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.exception.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
@@ -66,8 +67,8 @@ public class App {
         SearchEngine searchEngine = new SearchEngine(15);
         Searchable tomatoesTheBest = new Article("Томаты", "Помидоры лучшие овощи");
         Article potatoTheBest = new Article("Картофель", "Картофель хороший овощь");
-        Article beerArticle = new Article("Пиво", "Напиток, но не овощь");
-        Article earth = new Article("Земля", "На планете Земля растут овощи");
+        Article beerArticle = new Article("Пиво", "Напиток, но не овощь и все таки ов");
+        Article earth = new Article("Земля", "На планете Земля растут овощи и очень большие овощи");
 
         System.out.println("Вывод поискового массива");
         searchEngine.add(beer);
@@ -90,20 +91,40 @@ public class App {
         try {
             Product sausageError = new SimpleProduct("Колбаса", -8);
         } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка: " + e.getStackTrace());
+            System.out.println("Ошибка: " + e.getMessage());
         }
 
         try {
-            Product breadError = new SimpleProduct("null", 6);
+            Product breadErrorFirst = new SimpleProduct("null", 6);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.fillInStackTrace());
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        try {
+            Product breadErrorSecond = new SimpleProduct("  ", 6);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
         }
 
         try {
             Product vegetableError = new DiscountedProduct("овощь", 0, 100);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Ошибка: " + e.getMessage());
         }
-//        Product vegetableError = new DiscountedProduct("овощь", 1, 100);
+
+        System.out.println("Результат поиска овощ - успешно");
+        try {
+            Searchable searchPotatoSear = searchEngine.getSearchTerm("овощ");
+            System.out.println(searchPotatoSear.getStringRepresentation());
+        } catch (BestResultNotFound bestResultNotFound) {
+            bestResultNotFound.getMessage();
+        }
+
+        System.out.println("Результат поиска фрукты - не успешно");
+        try {
+            Searchable searchPotatoSear = searchEngine.getSearchTerm("фрукты");
+            System.out.println(searchPotatoSear.getStringRepresentation());
+        } catch (BestResultNotFound bestResultNotFound) {
+            System.out.println(bestResultNotFound.getMessage());
+        }
     }
 }
