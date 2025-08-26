@@ -87,6 +87,23 @@ public class App {
                 System.out.println(searchable.getStringRepresentation());
             }
         }
+        try {
+            Product sausageError = new SimpleProduct("Колбаса", -8);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getStackTrace());
+        }
 
+        try {
+            Product breadError = new SimpleProduct("null", 6);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.fillInStackTrace());
+        }
+
+        try {
+            Product vegetableError = new DiscountedProduct("овощь", 0, 100);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+//        Product vegetableError = new DiscountedProduct("овощь", 1, 100);
     }
 }
