@@ -21,4 +21,14 @@ public class FixPriceProduct extends Product {
     public String toString() {
         return super.toString() + "Фиксированная цена <" + FIX_PRICE_PRODUCT + ">";
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

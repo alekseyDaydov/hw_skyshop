@@ -46,7 +46,7 @@ public class ProductBasket {
 
     public boolean isCheckProductBasket(Product product) {
         for (Product element : productBasket) {
-            if (element != null && element.getName().equals(product.getName())) {
+            if (element != null && element.getName().contains(product.getName())) {
                 return true;
             }
         }
@@ -62,7 +62,7 @@ public class ProductBasket {
         Iterator iterator = productBasket.iterator();
         while (iterator.hasNext()) {
             Product product = (Product) iterator.next();
-            if (product.getName().equals(findNameProduct)) {
+            if (product.getName().contains(findNameProduct)) {
                 deleteList.add(product);
                 iterator.remove();
             }
