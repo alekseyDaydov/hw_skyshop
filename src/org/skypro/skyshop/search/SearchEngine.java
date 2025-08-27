@@ -44,17 +44,7 @@ public class SearchEngine {
         int countMax = 0;
         int indexMax = 0;
         for (int i = 0; i < searchables.length; i++) {
-            int indexString = 0;
-            int count = 0;
-            if (searchables[i] != null) {
-                String text = searchables[i].searchTerm();
-                int indexSubString = text.indexOf(findText);
-                while (indexSubString != -1) {
-                    count++;
-                    indexString = indexSubString + findText.length();
-                    indexSubString = text.indexOf(findText, indexString);
-                }
-            }
+           int count = countMatches(searchables[i], findText);
             if (count > countMax) {
                 countMax = count;
                 indexMax = i;
@@ -64,5 +54,20 @@ public class SearchEngine {
             throw new BestResultNotFound("Запрос: "  + findText + " - не нашлось подходящей строки");
         }
         return searchables[indexMax];
+    }
+
+    private int countMatches(Searchable searchable, String findText) {
+        int indexString;
+        int count = 0;
+        if (searchable != null) {
+            String text = searchable.searchTerm();
+            int indexSubString = text.indexOf(findText);
+            while (indexSubString != -1) {
+                count++;
+                indexString = indexSubString + findText.length();
+                indexSubString = text.indexOf(findText, indexString);
+            }
+        }
+        return count;
     }
 }
