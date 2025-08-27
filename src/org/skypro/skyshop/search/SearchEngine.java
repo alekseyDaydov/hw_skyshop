@@ -2,58 +2,48 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exception.BestResultNotFound;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class SearchEngine {
     private int countElement;
-    Searchable[] searchables;
+    private final List<Searchable> searchables = new ArrayList<>();
 
     public SearchEngine(int countElement) {
         this.countElement = countElement;
-        searchables = new Searchable[countElement];
     }
 
-    public Searchable[] search(String findText) {
-        int count = 1;
-        Searchable[] searchResult = new Searchable[countElement];
-        for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] != null && searchables[i].searchTerm().contains(findText)) {
-                searchResult[i] = searchables[i];
-                count++;
-            }
-            if (count > 5) {
-                break;
+    public List<Searchable> search(String findText) {
+        List<Searchable> searchResult = new ArrayList<>();
+        for (Searchable element : searchables) {
+            if (element != null && element.searchTerm().contains(findText)) {
+                searchResult.add(element);
             }
         }
         return searchResult;
     }
 
     public void add(Searchable searchable) {
-        boolean isExist = true;
-        for (int i = 0; i < searchables.length; i++) {
-            if (searchables[i] == null) {
-                searchables[i] = searchable;
-                isExist = false;
-                break;
-            }
-        }
-        if (isExist) {
-            throw new IllegalArgumentException("Массив поискового движка заполнен");
-        }
+        searchables.add(searchable);
     }
 
     public Searchable getSearchTerm(String findText) throws BestResultNotFound {
         int countMax = 0;
         int indexMax = 0;
-        for (int i = 0; i < searchables.length; i++) {
-           int count = countMatches(searchables[i], findText);
+        Iterator iterator = searchables.iterator();
+        while (iterator.hasNext()) {
+            Searchable searchable = (Searchable) iterator.next();
+            int count = countMatches(searchable, findText);
             if (count > countMax) {
                 countMax = count;
-                indexMax = i;
+                indexMax = searchables.indexOf(searchable);
             }
         }
         if (countMax == 0) {
-            throw new BestResultNotFound("Запрос: "  + findText + " - не нашлось подходящей строки");
+            throw new BestResultNotFound("Запрос: " + findText + " - не нашлось подходящей строки");
         }
-        return searchables[indexMax];
+        return searchables.get(indexMax);
     }
 
     private int countMatches(Searchable searchable, String findText) {

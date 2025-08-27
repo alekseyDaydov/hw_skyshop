@@ -23,6 +23,6 @@ public class SimpleProduct extends Product {
 
     @Override
     public String toString() {
-        return super.toString() + ">:<" + price + ">";
+        return super.toString() + "<" + price + ">";
     }
 }
