@@ -20,7 +20,7 @@ public class App {
         Product meat = new FixPriceProduct("Мясо");
         Product beer = new FixPriceProduct("Пиво");
         Product tomatoes = new DiscountedProduct("Помидоры", 12, 50);
-        Product potato = new DiscountedProduct("Колбаса", 45, 10);
+        Product potato = new DiscountedProduct("Картофель", 45, 10);
         Product vegetableFirst = new DiscountedProduct("овощь", 45, 10);
         Product vegetableSecond = new DiscountedProduct("овощь", 45, 10);
 
@@ -30,6 +30,7 @@ public class App {
         vasyBasket.addProduct(sausage);
         vasyBasket.addProduct(bread);
         vasyBasket.addProduct(meat);
+        vasyBasket.addProduct(bread);
 
         System.out.println("Печать содержимого корзины с несколькими товарами");
         vasyBasket.printProductBasket();
@@ -67,7 +68,7 @@ public class App {
         System.out.println(vasyBasket.isCheckProductBasket(sausage));
 
 
-        SearchEngine searchEngine = new SearchEngine(15);
+        SearchEngine searchEngine = new SearchEngine();
         Searchable tomatoesTheBest = new Article("Томаты", "Помидоры лучшие овощи");
         Article potatoTheBest = new Article("Картофель", "Картофель хороший овощь");
         Article beerArticle = new Article("Пиво", "Напиток, но не овощь и все таки ов");
@@ -81,9 +82,11 @@ public class App {
         searchEngine.add(potatoTheBest);
         searchEngine.add(beerArticle);
         searchEngine.add(earth);
+        searchEngine.add(earth);
         searchEngine.add(vegetableFirst);
         searchEngine.add(vegetableSecond);
 
+        System.out.println(searchEngine);
         List<Searchable> searchPotato = searchEngine.search("овощ");
         System.out.println("Результат поиска овощ");
         for (Searchable searchable : searchPotato) {
