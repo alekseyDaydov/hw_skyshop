@@ -5,12 +5,13 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private final List<Product> productBasket = new LinkedList<Product>();
-
+    //    private final List<Product> productBasket = new LinkedList<Product>();
+    private final Map<String, List<Product>> productBasket = new HashMap<>();
     public void addProduct(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Передано пустое значение");
         }
+        productBasket.get(product.getName().contains())
         productBasket.add(product);
     }
 
