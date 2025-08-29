@@ -5,39 +5,43 @@ import org.skypro.skyshop.exception.BestResultNotFound;
 import java.util.*;
 
 public class SearchEngine {
-    private final Map<String, Searchable> searchablesMap = new TreeMap<>();
+    private int countElement;
+    private final List<Searchable> searchables = new ArrayList<>();
 
-    public List<Searchable> search(String findText) {
-        List<Searchable> searchResult = new ArrayList<>();
-        for (Map.Entry<String, Searchable> element : searchablesMap.entrySet()) {
-            if (element.getValue() != null && element.getValue().searchTerm().contains(findText)) {
-                searchResult.add(element.getValue());
+    public SearchEngine(int countElement) {
+        this.countElement = countElement;
+    }
+
+    public Map<String, Searchable> search(String findText) {
+        Map<String, Searchable> searchResultMap = new TreeMap<>();
+        for (Searchable element : searchables) {
+            if (element != null && element.searchTerm().contains(findText)) {
+                searchResultMap.put(element.getName(), element);
             }
         }
-        return searchResult;
+        return searchResultMap;
     }
 
     public void add(Searchable searchable) {
-        if (searchable == null) {
-            throw new IllegalArgumentException("Введено пустое значение");
-        }
-        searchablesMap.put(searchable.getName(), searchable);
+        searchables.add(searchable);
     }
 
     public Searchable getSearchTerm(String findText) throws BestResultNotFound {
         int countMax = 0;
-        String nameMax = null;
-        for (Map.Entry<String, Searchable> element : searchablesMap.entrySet()) {
-            int count = countMatches(element.getValue(), findText);
+        int indexMax = 0;
+        Iterator iterator = searchables.iterator();
+        while (iterator.hasNext()) {
+            Searchable searchable = (Searchable) iterator.next();
+            int count = countMatches(searchable, findText);
             if (count > countMax) {
                 countMax = count;
-                nameMax = element.getKey();
+                indexMax = searchables.indexOf(searchable);
             }
         }
         if (countMax == 0) {
             throw new BestResultNotFound("Запрос: " + findText + " - не нашлось подходящей строки");
         }
-        return searchablesMap.get(nameMax);
+        return searchables.get(indexMax);
     }
 
     private int countMatches(Searchable searchable, String findText) {
