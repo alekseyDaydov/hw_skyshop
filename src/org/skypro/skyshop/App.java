@@ -13,6 +13,7 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -88,8 +89,8 @@ public class App {
         searchEngine.add(vegetableSecond);
 
         System.out.println(searchEngine);
-        Map<String, Searchable> searchPotato = searchEngine.search("овощ");
-        System.out.println("Результат поиска овощ");
+        Set<Searchable> searchPotato = searchEngine.search("овощ");
+        System.out.println("Результат поиска 'search' - овощ ");
         System.out.println(searchPotato);
 
         try {
@@ -115,7 +116,7 @@ public class App {
             System.out.println("Ошибка: " + e.getMessage());
         }
 
-        System.out.println("Результат поиска овощ - успешно");
+        System.out.println("Результат поиска овощ 'getSearchTerm' - успешно");
         try {
             Searchable searchPotatoSear = searchEngine.getSearchTerm("овощ");
             System.out.println(searchPotatoSear.getStringRepresentation());
@@ -123,7 +124,7 @@ public class App {
             bestResultNotFound.getMessage();
         }
 
-        System.out.println("Результат поиска фрукты - не успешно");
+        System.out.println("Результат поиска фрукты 'getSearchTerm' - не успешно");
         try {
             Searchable searchPotatoSear = searchEngine.getSearchTerm("фрукты");
             System.out.println(searchPotatoSear.getStringRepresentation());

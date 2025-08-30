@@ -6,42 +6,50 @@ import java.util.*;
 
 public class SearchEngine {
     private int countElement;
-    private final List<Searchable> searchables = new ArrayList<>();
+    private final Set<Searchable> searchablesSet = new HashSet<>();
 
     public SearchEngine(int countElement) {
         this.countElement = countElement;
     }
 
-    public Map<String, Searchable> search(String findText) {
-        Map<String, Searchable> searchResultMap = new TreeMap<>();
-        for (Searchable element : searchables) {
+    public TreeSet<Searchable> search(String findText) {
+        TreeSet<Searchable> searchResultMap = new TreeSet<>(new ReversName());
+        for (Searchable element : searchablesSet) {
             if (element != null && element.searchTerm().contains(findText)) {
-                searchResultMap.put(element.getName(), element);
+                searchResultMap.add(element);
             }
         }
         return searchResultMap;
     }
 
+    public static class ReversName implements Comparator<Searchable> {
+        @Override
+        public int compare(Searchable o1, Searchable o2) {
+            int size1 = o1.getName().length();
+            int size2 = o2.getName().length();
+            return 0;
+        }
+    }
     public void add(Searchable searchable) {
-        searchables.add(searchable);
+        searchablesSet.add(searchable);
     }
 
     public Searchable getSearchTerm(String findText) throws BestResultNotFound {
         int countMax = 0;
-        int indexMax = 0;
-        Iterator iterator = searchables.iterator();
+        Searchable search = null;
+        Iterator iterator = searchablesSet.iterator();
         while (iterator.hasNext()) {
             Searchable searchable = (Searchable) iterator.next();
             int count = countMatches(searchable, findText);
             if (count > countMax) {
                 countMax = count;
-                indexMax = searchables.indexOf(searchable);
+                search = searchable;
             }
         }
         if (countMax == 0) {
             throw new BestResultNotFound("Запрос: " + findText + " - не нашлось подходящей строки");
         }
-        return searchables.get(indexMax);
+        return search;
     }
 
     private int countMatches(Searchable searchable, String findText) {
