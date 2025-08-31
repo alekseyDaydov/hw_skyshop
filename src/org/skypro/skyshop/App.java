@@ -70,7 +70,7 @@ public class App {
         System.out.println(vasyBasket.isCheckProductBasket(sausage));
 
 
-        SearchEngine searchEngine = new SearchEngine(15);
+        SearchEngine searchEngine = new SearchEngine();
         Searchable tomatoesTheBest = new Article("Томаты", "Помидоры лучшие овощи");
         Article potatoTheBest = new Article("Картофель", "Картофель хороший овощь");
         Article beerArticle = new Article("Пиво", "Напиток, но не овощь и все таки ов");
@@ -153,5 +153,21 @@ public class App {
         System.out.println("Содержимое корзины");
         vasyBasket.printProductBasket();
 
+        System.out.println("Проверка compare и compareTo");
+        System.out.println("Вывод поискового массива");
+        searchEngine.add(beer); // Пиво
+        searchEngine.add(tomatoes); // Помидоры
+        searchEngine.add(potato);   // Картофель
+        searchEngine.add(tomatoesTheBest); // Томаты
+        searchEngine.add(potatoTheBest);// Картофель
+        searchEngine.add(beerArticle);// Пиво
+        searchEngine.add(earth);// Земля
+        searchEngine.add(earth);// Земля
+        searchEngine.add(vegetableFirst);// овощь
+        searchEngine.add(vegetableSecond);// овощь
+
+        searchEngine.print();
+        Set<Searchable> searchPotatoCompare = searchEngine.search("овощ");
+        System.out.println("результаты поиска: " + searchPotatoCompare);
     }
 }

@@ -5,15 +5,10 @@ import org.skypro.skyshop.exception.BestResultNotFound;
 import java.util.*;
 
 public class SearchEngine {
-    private int countElement;
     private final Set<Searchable> searchablesSet = new HashSet<>();
 
-    public SearchEngine(int countElement) {
-        this.countElement = countElement;
-    }
-
     public TreeSet<Searchable> search(String findText) {
-        TreeSet<Searchable> searchResultMap = new TreeSet<>(new ReversName());
+        TreeSet<Searchable> searchResultMap = new TreeSet<>(new SortNameComparator());
         for (Searchable element : searchablesSet) {
             if (element != null && element.searchTerm().contains(findText)) {
                 searchResultMap.add(element);
@@ -22,14 +17,6 @@ public class SearchEngine {
         return searchResultMap;
     }
 
-    public static class ReversName implements Comparator<Searchable> {
-        @Override
-        public int compare(Searchable o1, Searchable o2) {
-            int size1 = o1.getName().length();
-            int size2 = o2.getName().length();
-            return 0;
-        }
-    }
     public void add(Searchable searchable) {
         searchablesSet.add(searchable);
     }
@@ -65,5 +52,9 @@ public class SearchEngine {
             }
         }
         return count;
+    }
+
+    public void print() {
+        System.out.println(searchablesSet);
     }
 }
