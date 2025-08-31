@@ -24,7 +24,7 @@ public class App {
         Product tomatoes = new DiscountedProduct("Помидоры", 12, 50);
         Product potato = new DiscountedProduct("Картофель", 45, 10);
         Product vegetableFirst = new DiscountedProduct("овощь", 45, 10);
-        Product vegetableSecond = new DiscountedProduct("овощь", 45, 10);
+        Product vegetableSecond = new DiscountedProduct("яблоко", 45, 10);
 
         System.out.println("Добавление продукта в корзину");
         System.out.println("vasyBasket");
@@ -75,6 +75,7 @@ public class App {
         Article potatoTheBest = new Article("Картофель", "Картофель хороший овощь");
         Article beerArticle = new Article("Пиво", "Напиток, но не овощь и все таки ов");
         Article earth = new Article("Земля", "На планете Земля растут овощи и очень большие овощи");
+        Article apple = new Article("Яблоко", "На планете Земля растут овощи и очень большие овощи");
 
         System.out.println("Вывод поискового массива");
         searchEngine.add(beer);
@@ -155,6 +156,7 @@ public class App {
 
         System.out.println("Проверка compare и compareTo");
         System.out.println("Вывод поискового массива");
+        searchEngine.add(apple);
         searchEngine.add(beer); // Пиво
         searchEngine.add(tomatoes); // Помидоры
         searchEngine.add(potato);   // Картофель
@@ -165,6 +167,7 @@ public class App {
         searchEngine.add(earth);// Земля
         searchEngine.add(vegetableFirst);// овощь
         searchEngine.add(vegetableSecond);// овощь
+        searchEngine.add(apple);
 
         searchEngine.print();
         Set<Searchable> searchPotatoCompare = searchEngine.search("овощ");
