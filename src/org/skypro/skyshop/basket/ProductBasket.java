@@ -26,37 +26,41 @@ public class ProductBasket {
     }
 
     public double getPriceBasket() {
-        return productBasket.values().stream().flatMap(Collection::stream)
+        return productBasket.values().stream()
+                .flatMap(Collection::stream)
                 .filter(Objects::nonNull)
                 .mapToInt(value -> value.getPrice())
                 .sum();
     }
 
     public void printProductBasket() {
-        double price = 0;
-        int countSpecial = 0;
-        List<Product> productList;
-        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
-            System.out.println("Ключ: " + element.getKey());
-            productList = element.getValue();
-            System.out.println("Значение: ");
-            for (Product product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                    price += (double) product.getPrice();
-                    if (product.isSpecial()) {
-                        countSpecial++;
-                    }
-                }
-            }
-        }
+        productBasket.values().stream()
+                .flatMap(Collection::stream)
+                .forEach((element)-> System.out.println(element.));
+//        double price = 0;
+//        int countSpecial = 0;
+//        List<Product> productList;
+//        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
+//            System.out.println("Ключ: " + element.getKey());
+//            productList = element.getValue();
+//            System.out.println("Значение: ");
+//            for (Product product : productList) {
+//                if (product != null) {
+//                    System.out.println(product);
+//                    price += (double) product.getPrice();
+//                    if (product.isSpecial()) {
+//                        countSpecial++;
+//                    }
+//                }
+//            }
+//        }
 
-        if (price != 0) {
-            System.out.println("Итого: <" + price + ">");
-            System.out.println("Специальных товаров: <" + countSpecial + ">");
-        } else {
-            System.out.println("В корзине пусто");
-        }
+//        if (price != 0) {
+//            System.out.println("Итого: <" + price + ">");
+//            System.out.println("Специальных товаров: <" + countSpecial + ">");
+//        } else {
+//            System.out.println("В корзине пусто");
+//        }
     }
 
     public boolean isCheckProductBasket(Product product) {
