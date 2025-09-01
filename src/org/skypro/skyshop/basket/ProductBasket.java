@@ -5,20 +5,35 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private final List<Product> productBasket = new LinkedList<Product>();
+    private final Map<String, List<Product>> productBasket = new HashMap<>();
 
     public void addProduct(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Передано пустое значение");
         }
-        productBasket.add(product);
+//        получить имя продукта
+        List<Product> productList = new ArrayList<>();
+//        смотрим есть ли такой ключ продукта в MAP
+        if (productBasket.containsKey(product.getName())) {
+//            получить список по имени продуктов
+            productList = productBasket.get(product.getName());
+//            добавить в список по имени
+            productList.add(product);
+        } else {
+            productList.add(product);
+        }
+        productBasket.put(product.getName(), productList);
     }
 
     public double getPriceBasket() {
         double price = 0;
-        for (Product element : productBasket) {
-            if (productBasket != null) {
-                price += (double) element.getPrice();
+        List<Product> productList;
+        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
+            productList = element.getValue();
+            for (Product product : productList) {
+                if (productBasket != null) {
+                    price += (double) product.getPrice();
+                }
             }
         }
         return price;
@@ -27,15 +42,22 @@ public class ProductBasket {
     public void printProductBasket() {
         double price = 0;
         int countSpecial = 0;
-        for (Product element : productBasket) {
-            if (element != null) {
-                System.out.println(element);
-                price += (double) element.getPrice();
-                if (element.isSpecial()) {
-                    countSpecial++;
+        List<Product> productList;
+        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
+            System.out.println("Ключ: " + element.getKey());
+            productList = element.getValue();
+            System.out.println("Значение: ");
+            for (Product product : productList) {
+                if (product != null) {
+                    System.out.println(product);
+                    price += (double) product.getPrice();
+                    if (product.isSpecial()) {
+                        countSpecial++;
+                    }
                 }
             }
         }
+
         if (price != 0) {
             System.out.println("Итого: <" + price + ">");
             System.out.println("Специальных товаров: <" + countSpecial + ">");
@@ -45,8 +67,8 @@ public class ProductBasket {
     }
 
     public boolean isCheckProductBasket(Product product) {
-        for (Product element : productBasket) {
-            if (element != null && element.getName().contains(product.getName())) {
+        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
+            if (element.getKey().equals(product.getName())) {
                 return true;
             }
         }
@@ -59,13 +81,17 @@ public class ProductBasket {
 
     public List<Product> deleteProductByName(String findNameProduct) {
         List<Product> deleteList = new ArrayList<>();
-        Iterator iterator = productBasket.iterator();
-        while (iterator.hasNext()) {
-            Product product = (Product) iterator.next();
-            if (product.getName().contains(findNameProduct)) {
-                deleteList.add(product);
-                iterator.remove();
+        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
+            if (element.getKey().contains(findNameProduct)) {
+                Iterator iterator = element.getValue().iterator();
+                while (iterator.hasNext()) {
+                    deleteList.add((Product) iterator.next());
+                }
             }
+        }
+
+        for (Product pr : deleteList) {
+            productBasket.remove(pr.getName());
         }
         return deleteList;
     }

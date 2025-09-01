@@ -12,6 +12,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class App {
         Product meat = new FixPriceProduct("Мясо");
         Product beer = new FixPriceProduct("Пиво");
         Product tomatoes = new DiscountedProduct("Помидоры", 12, 50);
-        Product potato = new DiscountedProduct("Колбаса", 45, 10);
+        Product potato = new DiscountedProduct("Картофель", 45, 10);
         Product vegetableFirst = new DiscountedProduct("овощь", 45, 10);
         Product vegetableSecond = new DiscountedProduct("овощь", 45, 10);
 
@@ -30,6 +31,7 @@ public class App {
         vasyBasket.addProduct(sausage);
         vasyBasket.addProduct(bread);
         vasyBasket.addProduct(meat);
+        vasyBasket.addProduct(bread);
 
         System.out.println("Печать содержимого корзины с несколькими товарами");
         vasyBasket.printProductBasket();
@@ -81,16 +83,14 @@ public class App {
         searchEngine.add(potatoTheBest);
         searchEngine.add(beerArticle);
         searchEngine.add(earth);
+        searchEngine.add(earth);
         searchEngine.add(vegetableFirst);
         searchEngine.add(vegetableSecond);
 
-        List<Searchable> searchPotato = searchEngine.search("овощ");
+        System.out.println(searchEngine);
+        Map<String, Searchable> searchPotato = searchEngine.search("овощ");
         System.out.println("Результат поиска овощ");
-        for (Searchable searchable : searchPotato) {
-            if (searchable != null) {
-                System.out.println(searchable.getStringRepresentation());
-            }
-        }
+        System.out.println(searchPotato);
 
         try {
             Product sausageError = new SimpleProduct("Колбаса", -8);
