@@ -26,17 +26,10 @@ public class ProductBasket {
     }
 
     public double getPriceBasket() {
-        double price = 0;
-        List<Product> productList;
-        for (Map.Entry<String, List<Product>> element : productBasket.entrySet()) {
-            productList = element.getValue();
-            for (Product product : productList) {
-                if (productBasket != null) {
-                    price += (double) product.getPrice();
-                }
-            }
-        }
-        return price;
+        return productBasket.values().stream().flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .mapToInt(value -> value.getPrice())
+                .sum();
     }
 
     public void printProductBasket() {
