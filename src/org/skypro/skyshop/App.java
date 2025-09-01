@@ -13,6 +13,7 @@ import org.skypro.skyshop.search.Searchable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -23,7 +24,7 @@ public class App {
         Product tomatoes = new DiscountedProduct("Помидоры", 12, 50);
         Product potato = new DiscountedProduct("Картофель", 45, 10);
         Product vegetableFirst = new DiscountedProduct("овощь", 45, 10);
-        Product vegetableSecond = new DiscountedProduct("овощь", 45, 10);
+        Product vegetableSecond = new DiscountedProduct("яблоко", 45, 10);
 
         System.out.println("Добавление продукта в корзину");
         System.out.println("vasyBasket");
@@ -69,11 +70,12 @@ public class App {
         System.out.println(vasyBasket.isCheckProductBasket(sausage));
 
 
-        SearchEngine searchEngine = new SearchEngine(15);
+        SearchEngine searchEngine = new SearchEngine();
         Searchable tomatoesTheBest = new Article("Томаты", "Помидоры лучшие овощи");
         Article potatoTheBest = new Article("Картофель", "Картофель хороший овощь");
         Article beerArticle = new Article("Пиво", "Напиток, но не овощь и все таки ов");
         Article earth = new Article("Земля", "На планете Земля растут овощи и очень большие овощи");
+        Article apple = new Article("Яблоко", "На планете Земля растут овощи и очень большие овощи");
 
         System.out.println("Вывод поискового массива");
         searchEngine.add(beer);
@@ -88,8 +90,8 @@ public class App {
         searchEngine.add(vegetableSecond);
 
         System.out.println(searchEngine);
-        Map<String, Searchable> searchPotato = searchEngine.search("овощ");
-        System.out.println("Результат поиска овощ");
+        Set<Searchable> searchPotato = searchEngine.search("овощ");
+        System.out.println("Результат поиска 'search' - овощ ");
         System.out.println(searchPotato);
 
         try {
@@ -115,7 +117,7 @@ public class App {
             System.out.println("Ошибка: " + e.getMessage());
         }
 
-        System.out.println("Результат поиска овощ - успешно");
+        System.out.println("Результат поиска овощ 'getSearchTerm' - успешно");
         try {
             Searchable searchPotatoSear = searchEngine.getSearchTerm("овощ");
             System.out.println(searchPotatoSear.getStringRepresentation());
@@ -123,7 +125,7 @@ public class App {
             bestResultNotFound.getMessage();
         }
 
-        System.out.println("Результат поиска фрукты - не успешно");
+        System.out.println("Результат поиска фрукты 'getSearchTerm' - не успешно");
         try {
             Searchable searchPotatoSear = searchEngine.getSearchTerm("фрукты");
             System.out.println(searchPotatoSear.getStringRepresentation());
@@ -152,5 +154,23 @@ public class App {
         System.out.println("Содержимое корзины");
         vasyBasket.printProductBasket();
 
+        System.out.println("Проверка compare и compareTo");
+        System.out.println("Вывод поискового массива");
+        searchEngine.add(apple);
+        searchEngine.add(beer); // Пиво
+        searchEngine.add(tomatoes); // Помидоры
+        searchEngine.add(potato);   // Картофель
+        searchEngine.add(tomatoesTheBest); // Томаты
+        searchEngine.add(potatoTheBest);// Картофель
+        searchEngine.add(beerArticle);// Пиво
+        searchEngine.add(earth);// Земля
+        searchEngine.add(earth);// Земля
+        searchEngine.add(vegetableFirst);// овощь
+        searchEngine.add(vegetableSecond);// овощь
+        searchEngine.add(apple);
+
+        searchEngine.print();
+        Set<Searchable> searchPotatoCompare = searchEngine.search("овощ");
+        System.out.println("результаты поиска: " + searchPotatoCompare);
     }
 }

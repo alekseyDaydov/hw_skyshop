@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public abstract class Product implements Searchable {
     protected final String TERM_PRODUCT = "PRODUCT";
-    private String name;
+    private final String name;
 
     public Product(String name) {
         if (("null" == name) || name.isBlank()) {
@@ -40,14 +40,16 @@ public abstract class Product implements Searchable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(name, product.name);
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        Searchable product = (Searchable) other;
+        return Objects.equals(name, product.getName());
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
     }
+
 }

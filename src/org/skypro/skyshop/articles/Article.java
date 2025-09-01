@@ -6,8 +6,8 @@ import java.util.Objects;
 
 public final class Article implements Searchable {
     private static String TERM_ARTICLE = "ARTICLE";
-    private String title;
-    private String text;
+    private final String title;
+    private final String text;
 
     public Article(String title, String text) {
         this.title = title;
@@ -20,7 +20,7 @@ public final class Article implements Searchable {
 
     @Override
     public String toString() {
-        return  title + '\n' + text ;
+        return title + '\n' + text;
     }
 
     @Override
@@ -39,14 +39,15 @@ public final class Article implements Searchable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Article article = (Article) o;
-        return Objects.equals(title, article.title) && Objects.equals(text, article.text);
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        if (other == null) return false;
+        Searchable art = (Searchable) other;
+        return Objects.equals(title, art.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, text);
+        return Objects.hashCode(title);
     }
 }
