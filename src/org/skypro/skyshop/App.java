@@ -10,6 +10,9 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class App {
     public static void main(String[] args) {
         Product sausage = new SimpleProduct("Колбаса", 20);
@@ -17,7 +20,7 @@ public class App {
         Product meat = new FixPriceProduct("Мясо");
         Product beer = new FixPriceProduct("Пиво");
         Product tomatoes = new DiscountedProduct("Помидоры", 12, 50);
-        Product potato = new DiscountedProduct("Картофель", 45, 10);
+        Product potato = new DiscountedProduct("Колбаса", 45, 10);
         Product vegetableFirst = new DiscountedProduct("овощь", 45, 10);
         Product vegetableSecond = new DiscountedProduct("овощь", 45, 10);
 
@@ -81,13 +84,14 @@ public class App {
         searchEngine.add(vegetableFirst);
         searchEngine.add(vegetableSecond);
 
-        Searchable[] searchPotato = searchEngine.search("овощ");
-        System.out.println("Результат поиска potato");
+        List<Searchable> searchPotato = searchEngine.search("овощ");
+        System.out.println("Результат поиска овощ");
         for (Searchable searchable : searchPotato) {
             if (searchable != null) {
                 System.out.println(searchable.getStringRepresentation());
             }
         }
+
         try {
             Product sausageError = new SimpleProduct("Колбаса", -8);
         } catch (IllegalArgumentException e) {
@@ -126,5 +130,27 @@ public class App {
         } catch (BestResultNotFound bestResultNotFound) {
             System.out.println(bestResultNotFound.getMessage());
         }
+
+        System.out.println("Добавление продуктов в корзину");
+        vasyBasket.addProduct(sausage);
+        vasyBasket.addProduct(beer);
+        vasyBasket.addProduct(tomatoes);
+        vasyBasket.addProduct(potato);
+        vasyBasket.addProduct(sausage);
+        vasyBasket.addProduct(potato);
+        vasyBasket.printProductBasket();
+
+        System.out.println("Удаление существующего продукта 'Колбаса' ");
+        List<Product> deleteListVasy = vasyBasket.deleteProductByName("Колбаса");
+        System.out.println("deleteListVasy = " + deleteListVasy);
+
+        System.out.println("Удалить не существующий продукт 'Колб' ");
+        List<Product> deleteListVasyEmpty = vasyBasket.deleteProductByName("Колб");
+        if (deleteListVasyEmpty.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+        System.out.println("Содержимое корзины");
+        vasyBasket.printProductBasket();
+
     }
 }
