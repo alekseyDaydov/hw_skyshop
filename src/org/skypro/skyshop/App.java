@@ -151,7 +151,7 @@ public class App {
         if (deleteListVasyEmpty.isEmpty()) {
             System.out.println("Список пуст");
         }
-        System.out.println("Содержимое корзины");
+        System.out.println("Содержимое корзины printProductBasket");
         vasyBasket.printProductBasket();
 
         System.out.println("Проверка compare и compareTo");

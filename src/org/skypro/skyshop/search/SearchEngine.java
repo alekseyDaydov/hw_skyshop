@@ -14,14 +14,15 @@ public class SearchEngine {
         return searchablesSet.stream()
                 .filter(Objects::nonNull)
                 .filter(element -> element.searchTerm().contains(findText))
-                .collect(Collectors.toCollection(() -> {
-                    return new TreeSet<Searchable>(
-                            (Searchable o1, Searchable o2) -> {
-                                return Integer.compare(o2.getName().length(), o1.getName().length()) == 0 ?
-                                        o1.getName().compareTo(o2.getName()) :
-                                        Integer.compare(o2.getName().length(), o1.getName().length());
-                            });
-                }));
+                .collect(Collectors.toCollection(() ->
+                                new TreeSet<Searchable>(
+                                        (Searchable o1, Searchable o2) ->Integer.compare(o2.getName().length(), o1.getName().length()) == 0 ?
+                                                    o1.getName().compareTo(o2.getName()) :
+                                                    Integer.compare(o2.getName().length(), o1.getName().length())
+                                )
+
+                        )
+                );
     }
 
     public void add(Searchable searchable) {
