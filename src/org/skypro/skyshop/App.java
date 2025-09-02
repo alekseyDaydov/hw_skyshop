@@ -49,7 +49,7 @@ public class App {
         System.out.println("Печать содержимого корзины с несколькими товарами");
         petyBasket.printProductBasket();
 
-        System.out.println("Получение стоимости корзины с несколькими товарами");
+        System.out.println("Получение стоимости корзины с несколькими товарами getPriceBasket");
         System.out.println(petyBasket.getPriceBasket());
         System.out.println(vasyBasket.getPriceBasket());
 
@@ -151,7 +151,7 @@ public class App {
         if (deleteListVasyEmpty.isEmpty()) {
             System.out.println("Список пуст");
         }
-        System.out.println("Содержимое корзины");
+        System.out.println("Содержимое корзины printProductBasket");
         vasyBasket.printProductBasket();
 
         System.out.println("Проверка compare и compareTo");
